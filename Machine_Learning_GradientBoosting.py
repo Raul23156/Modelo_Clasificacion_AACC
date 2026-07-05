@@ -117,7 +117,7 @@ for zona_nombre, canales_zona in zonas.items():
         pipeline = Pipeline([
             ('undersample', RandomUnderSampler(sampling_strategy='majority', random_state=42)), # Submuestreo
             ('scaler', StandardScaler()),                                                       # Estandarización
-            ('select', SelectKBest(score_func=f_classif, k=10)),                                # Selección de carcterísticas (probar distintos valores de k)
+            ('select', SelectKBest(score_func=f_classif, k=10)),                                # Selección de carcterísticas
             ('gb', GradientBoostingClassifier(random_state=42))                                 # Modelo de clasificación
         ])
 
