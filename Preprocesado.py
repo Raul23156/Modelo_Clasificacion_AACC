@@ -6,11 +6,11 @@ from mne.preprocessing import annotate_muscle_zscore, compute_proj_eog
 ruta_archivos_cortados = os.path.join(os.getcwd(), "EEGs", "EEG_crop", "PRE")
 
 # Recorrer todos los elementos dentro de la carpeta principal
-for colegio in os.listdir(ruta_archivos_cortados):      # Recorro carpetas de colegios
+for colegio in os.listdir(ruta_archivos_cortados):
     ruta_colegio = os.path.join(ruta_archivos_cortados, colegio)
-    for curso in os.listdir(ruta_colegio):              # Recorro carpetas de cursos
+    for curso in os.listdir(ruta_colegio):
         ruta_curso = os.path.join(ruta_colegio, curso, "EEG")
-        for iniciales in os.listdir(ruta_curso):        # Recorro carpetas de iniciales
+        for iniciales in os.listdir(ruta_curso):
             ruta_iniciales = os.path.join(ruta_curso, iniciales)
 
             Session = os.listdir(ruta_iniciales)[0]

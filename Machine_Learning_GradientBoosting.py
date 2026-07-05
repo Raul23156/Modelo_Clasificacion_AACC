@@ -15,7 +15,7 @@ from sklearn.metrics import confusion_matrix, accuracy_score, f1_score, precisio
 
 
 ## Carga de datos
-banda = "beta"         # Seleccionar banda (delta, theta, alpha, beta, gamma o full)
+banda = "alpha"         # Seleccionar banda (delta, theta, alpha, beta, gamma o full)
 matriz_carac = pd.read_csv(f"matriz_caracteristicas_{banda}.csv")
 meta = pd.read_csv("meta.csv")
 df = matriz_carac.merge(meta[["ID", "y"]], on="ID", how="inner")
@@ -31,42 +31,42 @@ grupos_metricas = {
     "Geometricas": ["valor_cuadratico_medio", "integral"],
     "Distribucion": ["asimetria", "curtosis"],
     "Espectrales": ["potencia_absoluta", "potencia_relativa_intra-canal", "potencia_relativa"],
-    "Entropia": ["entropia"],
+    "Entropia": ["entropia"]
 }
 
 ## Grupos de métricas para probar combinaciones
 metricas_a_usar = {
-    "Descriptivas": grupos_metricas["Descriptivas"],
-    "Diferencial": grupos_metricas["Diferencial"],
-    "Geometricas": grupos_metricas["Geometricas"],
-    "Distribucion": grupos_metricas["Distribucion"],
-    "Espectrales": grupos_metricas["Espectrales"],
-    "Entropia": grupos_metricas["Entropia"],
+     "Descriptivas": grupos_metricas["Descriptivas"],
+     "Diferencial": grupos_metricas["Diferencial"],
+     "Geometricas": grupos_metricas["Geometricas"],
+     "Distribucion": grupos_metricas["Distribucion"],
+     "Espectrales": grupos_metricas["Espectrales"],
+     "Entropia": grupos_metricas["Entropia"],
     
-    "Descriptivas_Diferencial": grupos_metricas["Descriptivas"] + grupos_metricas["Diferencial"],
-    "Descriptivas_Geometricas": grupos_metricas["Descriptivas"] + grupos_metricas["Geometricas"],
-    "Descriptivas_Distribucion": grupos_metricas["Descriptivas"] + grupos_metricas["Distribucion"],
-    "Descriptivas_Espectrales": grupos_metricas["Descriptivas"] + grupos_metricas["Espectrales"],
-    "Descriptivas_Entropia": grupos_metricas["Descriptivas"] + grupos_metricas["Entropia"],
-    "Diferencial_Geometricas": grupos_metricas["Diferencial"] + grupos_metricas["Geometricas"],
-    "Diferencial_Distribucion": grupos_metricas["Diferencial"] + grupos_metricas["Distribucion"],
-    "Diferencial_Espectrales": grupos_metricas["Diferencial"] + grupos_metricas["Espectrales"],
-    "Diferencial_Entropia": grupos_metricas["Diferencial"] + grupos_metricas["Entropia"],
-    "Geometricas_Distribucion": grupos_metricas["Geometricas"] + grupos_metricas["Distribucion"],
-    "Geometricas_Espectrales": grupos_metricas["Geometricas"] + grupos_metricas["Espectrales"],
-    "Geometricas_Entropia": grupos_metricas["Geometricas"] + grupos_metricas["Entropia"],
-    "Distribucion_Espectrales": grupos_metricas["Distribucion"] + grupos_metricas["Espectrales"],
-    "Distribucion_Entropia": grupos_metricas["Distribucion"] + grupos_metricas["Entropia"],
-    "Espectrales_Entropia": grupos_metricas["Espectrales"] + grupos_metricas["Entropia"],
+     "Descriptivas_Diferencial": grupos_metricas["Descriptivas"] + grupos_metricas["Diferencial"],
+     "Descriptivas_Geometricas": grupos_metricas["Descriptivas"] + grupos_metricas["Geometricas"],
+     "Descriptivas_Distribucion": grupos_metricas["Descriptivas"] + grupos_metricas["Distribucion"],
+     "Descriptivas_Espectrales": grupos_metricas["Descriptivas"] + grupos_metricas["Espectrales"],
+     "Descriptivas_Entropia": grupos_metricas["Descriptivas"] + grupos_metricas["Entropia"],
+     "Diferencial_Geometricas": grupos_metricas["Diferencial"] + grupos_metricas["Geometricas"],
+     "Diferencial_Distribucion": grupos_metricas["Diferencial"] + grupos_metricas["Distribucion"],
+     "Diferencial_Espectrales": grupos_metricas["Diferencial"] + grupos_metricas["Espectrales"],
+     "Diferencial_Entropia": grupos_metricas["Diferencial"] + grupos_metricas["Entropia"],
+     "Geometricas_Distribucion": grupos_metricas["Geometricas"] + grupos_metricas["Distribucion"],
+     "Geometricas_Espectrales": grupos_metricas["Geometricas"] + grupos_metricas["Espectrales"],
+     "Geometricas_Entropia": grupos_metricas["Geometricas"] + grupos_metricas["Entropia"],
+     "Distribucion_Espectrales": grupos_metricas["Distribucion"] + grupos_metricas["Espectrales"],
+     "Distribucion_Entropia": grupos_metricas["Distribucion"] + grupos_metricas["Entropia"],
+     "Espectrales_Entropia": grupos_metricas["Espectrales"] + grupos_metricas["Entropia"],
 
-    "Todas_menos_Descriptivas": grupos_metricas["Diferencial"] + grupos_metricas["Geometricas"] + grupos_metricas["Distribucion"] + grupos_metricas["Espectrales"] + grupos_metricas["Entropia"],
-    "Todas_menos_Diferencial": grupos_metricas["Descriptivas"] + grupos_metricas["Geometricas"] + grupos_metricas["Distribucion"] + grupos_metricas["Espectrales"] + grupos_metricas["Entropia"],
-    "Todas_menos_Geometricas": grupos_metricas["Descriptivas"] + grupos_metricas["Diferencial"] + grupos_metricas["Distribucion"] + grupos_metricas["Espectrales"] + grupos_metricas["Entropia"],
-    "Todas_menos_Distribucion": grupos_metricas["Descriptivas"] + grupos_metricas["Diferencial"] + grupos_metricas["Geometricas"] + grupos_metricas["Espectrales"] + grupos_metricas["Entropia"],
-    "Todas_menos_Espectrales": grupos_metricas["Descriptivas"] + grupos_metricas["Diferencial"] + grupos_metricas["Geometricas"] + grupos_metricas["Distribucion"] + grupos_metricas["Entropia"],
-    "Todas_menos_Entropia": grupos_metricas["Descriptivas"] + grupos_metricas["Diferencial"] + grupos_metricas["Geometricas"] + grupos_metricas["Distribucion"] + grupos_metricas["Espectrales"],
+     "Todas_menos_Descriptivas": grupos_metricas["Diferencial"] + grupos_metricas["Geometricas"] + grupos_metricas["Distribucion"] + grupos_metricas["Espectrales"] + grupos_metricas["Entropia"],
+     "Todas_menos_Diferencial": grupos_metricas["Descriptivas"] + grupos_metricas["Geometricas"] + grupos_metricas["Distribucion"] + grupos_metricas["Espectrales"] + grupos_metricas["Entropia"],
+     "Todas_menos_Geometricas": grupos_metricas["Descriptivas"] + grupos_metricas["Diferencial"] + grupos_metricas["Distribucion"] + grupos_metricas["Espectrales"] + grupos_metricas["Entropia"],
+     "Todas_menos_Distribucion": grupos_metricas["Descriptivas"] + grupos_metricas["Diferencial"] + grupos_metricas["Geometricas"] + grupos_metricas["Espectrales"] + grupos_metricas["Entropia"],
+     "Todas_menos_Espectrales": grupos_metricas["Descriptivas"] + grupos_metricas["Diferencial"] + grupos_metricas["Geometricas"] + grupos_metricas["Distribucion"] + grupos_metricas["Entropia"],
+     "Todas_menos_Entropia": grupos_metricas["Descriptivas"] + grupos_metricas["Diferencial"] + grupos_metricas["Geometricas"] + grupos_metricas["Distribucion"] + grupos_metricas["Espectrales"],
     
-    "Todas": grupos_metricas["Descriptivas"] + grupos_metricas["Diferencial"] + grupos_metricas["Geometricas"] + grupos_metricas["Distribucion"] + grupos_metricas["Espectrales"] + grupos_metricas["Entropia"]
+     "Todas": grupos_metricas["Descriptivas"] + grupos_metricas["Diferencial"] + grupos_metricas["Geometricas"] + grupos_metricas["Distribucion"] + grupos_metricas["Espectrales"] + grupos_metricas["Entropia"]
 }
 
 
@@ -74,26 +74,26 @@ metricas_a_usar = {
 all_channels = sorted(set(col.split('_')[0] for col in df_X.columns if '_' in col))
 print(f"Canales disponibles ({len(all_channels)}): {all_channels}")
 zonas = {
-    "Frontal": ["Fpz", "Fz", "Fp1", "Fp2", "AF3", "AF4", "F3", "F4", "F7", "F8", "FC1", "FC2", "FC5", "FC6"],
-    "Frontal_Izquierda": ["Fp1", "AF3", "F3", "F7", "FC1", "FC5"],
-    "Frontal_Derecha": ["Fp2", "AF4", "F4", "F8", "FC2", "FC6"],  
-    "Central_Frontal": ["FC1", "FC2","FC5", "FC6"],
-    "Central": ["Cz", "C3", "C4"],
-    "Parietal": ["Pz", "P3", "P4", "P7", "P8", "CP1", "CP2", "CP5", "CP6", "POz"],
-    "Parietal_Izquierda": ["P3", "P7", "CP1", "CP5"],
-    "Parietal_Derecha": ["P4", "P8", "CP2", "CP6"],
-    "Central_Parietal": ["CP1", "CP2", "CP5", "CP6"],
-    "Occipital": ["POz", "Oz", "O1", "O2"],
-    "Temporal": ["T7", "T8"],
-    "Temporal_Izquierda": ["T7"],
-    "Temporal_Derecha": ["T8"],
-    "Hemisferio_Izquierdo": ["Fp1", "AF3", "F3", "F7", "FC1", "FC5", "C3", "T7", "CP1", "CP5", "P3", "P7", "O1"],
-    "Hemisferio_Derecho": ["Fp2", "AF4", "F4", "F8", "FC2", "FC6", "C4", "T8", "CP2", "CP6", "P4", "P8", "O2"],
-    "Todas": all_channels
+     "Frontal": ["Fpz", "Fz", "Fp1", "Fp2", "AF3", "AF4", "F3", "F4", "F7", "F8", "FC1", "FC2", "FC5", "FC6"],
+     "Frontal_Izquierda": ["Fp1", "AF3", "F3", "F7", "FC1", "FC5"],
+     "Frontal_Derecha": ["Fp2", "AF4", "F4", "F8", "FC2", "FC6"],  
+     "Central_Frontal": ["FC1", "FC2","FC5", "FC6"],
+     "Central": ["Cz", "C3", "C4"],
+     "Parietal": ["Pz", "P3", "P4", "P7", "P8", "CP1", "CP2", "CP5", "CP6", "POz"],
+     "Parietal_Izquierda": ["P3", "P7", "CP1", "CP5"],
+     "Parietal_Derecha": ["P4", "P8", "CP2", "CP6"],
+     "Central_Parietal": ["CP1", "CP2", "CP5", "CP6"],
+     "Occipital": ["POz", "Oz", "O1", "O2"],
+     "Temporal": ["T7", "T8"],
+     "Temporal_Izquierda": ["T7"],
+     "Temporal_Derecha": ["T8"],
+     "Hemisferio_Izquierdo": ["Fp1", "AF3", "F3", "F7", "FC1", "FC5", "C3", "T7", "CP1", "CP5", "P3", "P7", "O1"],
+     "Hemisferio_Derecho": ["Fp2", "AF4", "F4", "F8", "FC2", "FC6", "C4", "T8", "CP2", "CP6", "P4", "P8", "O2"],
+     "Todas": all_channels
 }
 
 
-## Bucle principal: combinaciones Zona x Grupo
+## Bucle principal: combinaciones Zona cerebral x Grupo de métricas
 resultados = []
 for zona_nombre, canales_zona in zonas.items():
     for grupo_nombre, metricas_lista in metricas_a_usar.items():
@@ -109,15 +109,15 @@ for zona_nombre, canales_zona in zonas.items():
         columnas_filtradas = [col for col in columnas_zona if col.split('_', 1)[1] in metricas_lista]
         print(f"Nº de columnas resultantes: {len(columnas_filtradas)} (={len(metricas_lista)} métricas x {len(canales_zona)} canales)")
 
-        X = df_X[columnas_filtradas].values     # Matriz de caracteristicas
+        X = df_X[columnas_filtradas].values     # Matriz de caracteristicas del subconjunto grupo de métricas / zona cerebral
         print(f"  Dimensiones X: {X.shape} (muestras x características)")
 
 
         ## Definición del pipeline
         pipeline = Pipeline([
-            ('scaler', StandardScaler()),                                                       # Estandarización
-            ('select', SelectKBest(score_func=f_classif, k=20)),                                # Selección de carcterísticas (probar distintos valores de k)
             ('undersample', RandomUnderSampler(sampling_strategy='majority', random_state=42)), # Submuestreo
+            ('scaler', StandardScaler()),                                                       # Estandarización
+            ('select', SelectKBest(score_func=f_classif, k=10)),                                # Selección de carcterísticas (probar distintos valores de k)
             ('gb', GradientBoostingClassifier(random_state=42))                                 # Modelo de clasificación
         ])
 
@@ -126,14 +126,13 @@ for zona_nombre, canales_zona in zonas.items():
         param_grid = {
             'gb__learning_rate': [0.01, 0.05, 0.1],
             'gb__max_depth': [3, 5, 7],
-            'gb__n_estimators': [100, 200],
-            'gb__min_samples_split': [2, 5],
-            'gb__min_samples_leaf': [1, 3]
+            'gb__n_estimators': [100, 200]
         }
         
 
-        ## Evaluación con RepeatedKFold (n_splits=5, n_repeats=10 -> 50 Folds)
-        outer_cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=10, random_state=42)
+        ## Evaluación con RepeatedKFold
+        num_repeats = 10
+        outer_cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=num_repeats, random_state=42)
 
         # Listas para almacenar métricas de cada fold
         accuracies = []
@@ -151,9 +150,9 @@ for zona_nombre, canales_zona in zonas.items():
         first_fold_y_prob = None
         first_fold_auc = None
 
-        print("Iniciando validación cruzada (50 folds)...")
+        print(f"Iniciando validación cruzada ({5*num_repeats})...")
         for fold, (train_idx, test_idx) in enumerate(outer_cv.split(X, y), start=1): 
-            print(f"Fold {fold}/50")
+            print(f"Fold {fold}/{5*num_repeats}")
 
             X_train = X[train_idx]
             X_test = X[test_idx]
@@ -170,7 +169,7 @@ for zona_nombre, canales_zona in zonas.items():
                 n_jobs=-1,
                 verbose=1
             )
-            grid_search.fit(X, y)
+            grid_search.fit(X_train, y_train)
             best_params_fold = grid_search.best_params_
             best_params_folds.append(best_params_fold)
 
@@ -233,7 +232,7 @@ for zona_nombre, canales_zona in zonas.items():
 
         print("\nParámetros más frecuentes:")
         print(most_common_params)
-        print(f"Seleccionados en {frecuencia}/50 folds")
+        print(f"Seleccionados en {frecuencia}/{5*num_repeats} folds")
 
 
         ## Almacenar resultados de esta combinación Features/Zona
@@ -254,7 +253,7 @@ for zona_nombre, canales_zona in zonas.items():
             "AUC_mean": np.mean(aucs),
             "AUC_std": np.std(aucs),
             "Mejores_parametros": str(most_common_params),
-            "Frecuencia_mejores_parametros": f"{frecuencia}/50"
+            "Frecuencia_mejores_parametros": f"{frecuencia}/{5*num_repeats}"
         })
 
         
@@ -304,7 +303,7 @@ df_resultados["AUC"] = df_resultados.apply(lambda r: f"{r['AUC_mean']:.4f} ± {r
 columnas_mostrar = ["Features", "Zona", "Num_caracteristicas", "Accuracy", "F1-score", "F1-macro", "Precision", "Recall", "AUC", "Mejores_parametros", "Frecuencia_mejores_parametros"]
 df_mostrar = df_resultados[columnas_mostrar].copy()
 # Ordenar por F1 medio descendente
-df_mostrar["F1_orden"] = df_resultados["F1_mean"]
+df_mostrar["F1_orden"] = df_resultados["F1_macro_mean"]
 df_mostrar = df_mostrar.sort_values("F1_orden", ascending=False).drop(columns="F1_orden")
 
 print(df_mostrar.to_string(index=False))

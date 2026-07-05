@@ -137,11 +137,11 @@ filas_matriz_caracteristicas_full = []
 ruta_archivos_preprocesados = os.path.join(os.getcwd(), "EEGs", "EEG_preprocesado")
 
 # Recorrer todos los elementos dentro de la carpeta principal
-for colegio in os.listdir(ruta_archivos_preprocesados):                             # Recorro carpetas de colegios
+for colegio in os.listdir(ruta_archivos_preprocesados):
     ruta_colegio = os.path.join(ruta_archivos_preprocesados, colegio)
-    for curso in os.listdir(ruta_colegio):                                          # Recorro carpetas de cursos
+    for curso in os.listdir(ruta_colegio):
         ruta_curso = os.path.join(ruta_colegio, curso, "EEG")
-        for iniciales in os.listdir(ruta_curso):                                    # Recorro carpetas de iniciales
+        for iniciales in os.listdir(ruta_curso):
             ruta_iniciales = os.path.join(ruta_curso, iniciales)
 
             ruta_sesion = os.path.join(ruta_iniciales, os.listdir(ruta_iniciales)[0])
